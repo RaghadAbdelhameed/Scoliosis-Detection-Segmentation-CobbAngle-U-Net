@@ -1,14 +1,14 @@
-import numpy as np       # For handling arrays and numerical operations
-import cv2               # For reading the image
+import numpy as np  # For handling arrays and numerical operations
+import cv2  # For reading the image
 import matplotlib.pyplot as plt  # For displaying images
 
 # Parameters
-alpha = 0.03            # Diffusion coefficient (controls smoothing intensity)
-dt = 0.1                # Time step (smaller values improve stability)
-num_steps = 50          # Number of timesteps (how long diffusion runs)
+alpha = 0.03  # Diffusion coefficient (controls smoothing intensity)
+dt = 0.1  # Time step (smaller values improve stability)
+num_steps = 50  # Number of timesteps (how long diffusion runs)
 
 # Load the image from the specified directory
-image_path = "D:/DSA-SBME27/N146, Rt TAIS, M, 16 Yrs"  # Change this path to your image file
+image_path = r"D:\Projects\ARC\31y,M.jpg"  # Use raw string for Windows path
 print(f"Loading image from: {image_path}")  # Print the image path
 
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)  # Load grayscale image
@@ -34,17 +34,19 @@ else:
             for j in range(1, cols - 1):
                 # Basic gradient for edge detection
                 gradient = np.sqrt(
-                    (u_old[i+1, j] - u_old[i-1, j])**2 +
-                    (u_old[i, j+1] - u_old[i, j-1])**2
+                    (u_old[i + 1, j] - u_old[i - 1, j]) ** 2
+                    + (u_old[i, j + 1] - u_old[i, j - 1]) ** 2
                 )
 
                 # Diffusivity based on the gradient
-                diffusivity = np.exp(-(gradient**2) / (2 * 0.1**2))  # Adjust the sigma as needed
+                diffusivity = np.exp(
+                    -(gradient**2) / (2 * 0.1**2)
+                )  # Adjust the sigma as needed
 
                 # Update rule with edge preservation
                 u_new[i, j] = u_old[i, j] + alpha * dt * diffusivity * (
-                    (u_old[i+1, j] - 2*u_old[i, j] + u_old[i-1, j]) +
-                    (u_old[i, j+1] - 2*u_old[i, j] + u_old[i, j-1])
+                    (u_old[i + 1, j] - 2 * u_old[i, j] + u_old[i - 1, j])
+                    + (u_old[i, j + 1] - 2 * u_old[i, j] + u_old[i, j - 1])
                 )
 
     # Scale the result back to [0, 255] for saving
@@ -53,21 +55,23 @@ else:
     # Histogram Equalization to enhance visibility
     u_new_equalized = cv2.equalizeHist(u_new_scaled)
 
-    # Save the smoothed image as "test1.jpg" in the same directory
-    output_path = "D:/DSA-SBME27/test1.jpg"  # Specify the output file name and path
+    # Save the smoothed image as "processed_image.jpg" in the specified directory
+    output_path = (
+        r"D:\Projects\ARC\heat_result.jpg"  # Specify the output file name and path
+    )
     cv2.imwrite(output_path, u_new_equalized)
     print(f"Smoothed image saved as: {output_path}")
 
     # Display original and processed images side by side
     plt.figure(figsize=(10, 5))
     plt.subplot(1, 2, 1)
-    plt.imshow(image, cmap='gray')
+    plt.imshow(image, cmap="gray")
     plt.title("Original Image")
-    plt.axis('off')
+    plt.axis("off")
 
     plt.subplot(1, 2, 2)
-    plt.imshow(u_new_equalized, cmap='gray')
+    plt.imshow(u_new_equalized, cmap="gray")
     plt.title("Processed Image")
-    plt.axis('off')
+    plt.axis("off")
 
     plt.show()
