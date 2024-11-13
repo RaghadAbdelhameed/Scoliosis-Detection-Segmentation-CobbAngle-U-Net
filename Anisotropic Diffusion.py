@@ -9,7 +9,7 @@ num_steps = 50  # Number of timesteps (how long diffusion runs)
 kappa = 0.1  # Edge sensitivity parameter (smaller values make diffusivity more sensitive to edges)
 
 # Load the image
-image_path = r"D:\Projects\ARC\31y,M.jpg"  # Raw string for the file path
+image_path = r"./N1-Rt-TAIS-F-15-yrs_jpg.rf.e7d71f10e01dee49c9300535e95049bf.jpg"  # Raw string for the file path
 print(f"Loading image from: {image_path}")
 
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)  # Load grayscale image
@@ -54,7 +54,7 @@ u_scaled = (u * 255).astype(np.uint8)
 u_equalized = cv2.equalizeHist(u_scaled)
 
 # Save the processed image with a specified filename
-output_path = r"D:\Projects\ARC\diff_result.jpg"  # Updated to include a file extension
+output_path = r"D:\ARC\diff_result.jpg"  # Updated to include a file extension
 cv2.imwrite(output_path, u_equalized)
 print(f"Processed image saved as: {output_path}")
 
