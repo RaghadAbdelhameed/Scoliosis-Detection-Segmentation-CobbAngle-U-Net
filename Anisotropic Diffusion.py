@@ -32,7 +32,7 @@ for _ in range(num_steps):
     grad_magnitude = np.sqrt(grad_x**2 + grad_y**2)
 
     # Compute diffusivity function (edge-sensitive)
-    diffusivity = np.exp(-(grad_magnitude**2) / (2 * kappa**2))
+    diffusivity = 1 / (1 + (grad_magnitude / kappa) ** 2)
 
     # Calculate the divergence (Laplacian-like term) with diffusivity weighting
     diff_x = diffusivity * grad_x
