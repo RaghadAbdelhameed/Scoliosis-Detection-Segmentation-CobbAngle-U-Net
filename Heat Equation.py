@@ -27,18 +27,22 @@ else:
         # Compute gradients in the x and y directions
         grad_x = np.roll(u, -1, axis=0) - np.roll(u, 1, axis=0)
         grad_y = np.roll(u, -1, axis=1) - np.roll(u, 1, axis=1)
-        
+
         # Calculate the gradient magnitude
         grad_magnitude = np.sqrt(grad_x**2 + grad_y**2)
 
         # Diffusivity based on gradient magnitude
-        diffusivity = np.exp(-(grad_magnitude**2) / (2 * 0.1**2))  # Adjust sigma as needed
+        diffusivity = np.exp(
+            -(grad_magnitude**2) / (2 * 0.1**2)
+        )  # Adjust sigma as needed
 
         # Compute the Laplacian (second derivatives)
         laplacian = (
-            np.roll(u, 1, axis=0) + np.roll(u, -1, axis=0) +
-            np.roll(u, 1, axis=1) + np.roll(u, -1, axis=1) -
-            4 * u
+            np.roll(u, 1, axis=0)
+            + np.roll(u, -1, axis=0)
+            + np.roll(u, 1, axis=1)
+            + np.roll(u, -1, axis=1)
+            - 4 * u
         )
 
         # Update the image according to the heat equation with edge preservation
