@@ -9,7 +9,7 @@ num_steps = 50  # Number of timesteps (how long diffusion runs)
 kappa = 0.1  # Edge sensitivity parameter (smaller values make diffusivity more sensitive to edges)
 
 # Load the image
-image_path = r".\Dataset_Scoliosis\Scoliosis\15y,F.jpg"  # Raw string for the file path
+image_path = r".\Dataset_Scoliosis\Scoliosis\N115, Rt T and Lt L AIS, F, 10 Yrs.jpg"  # Raw string for the file path
 print(f"Loading image from: {image_path}")
 
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)  # Load grayscale image

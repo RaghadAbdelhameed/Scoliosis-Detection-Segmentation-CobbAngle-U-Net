@@ -8,9 +8,7 @@ dt = 0.1  # Time step (smaller values improve stability)
 num_steps = 50  # Number of timesteps (how long diffusion runs)
 
 # Load the image from the specified directory
-image_path = (
-    r".\Dataset_Scoliosis\Scoliosis\15y,F.jpg"  # Use raw string for Windows path
-)
+image_path = r".\Dataset_Scoliosis\Scoliosis\N115, Rt T and Lt L AIS, F, 10 Yrs.jpg"  # Use raw string for Windows path
 print(f"Loading image from: {image_path}")  # Print the image path
 
 image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)  # Load grayscale image
