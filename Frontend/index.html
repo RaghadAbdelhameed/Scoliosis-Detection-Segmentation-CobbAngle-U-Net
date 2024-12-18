@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARC</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./css/all.min.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="./images/ARC LOGO.png" type="image/png" />
+</head>
+
+<body>
+  <!-- Back to top -->
+  <button id="back-to-top"><i class="fa-solid fa-arrow-up"></i></button>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <div class="logo navbar-brand">
+        <img class="logo" src="./images/ARC LOGO.png" alt="" width="40" />
+        <a href="#">
+          <h2 class="fx-semibold mx-2">ARC</h2>
+        </a>
+      </div>
+      <!-- Sections -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#examination">Self-Examination</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#treatment">Treatment</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#model">AI Detection</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#research">Research</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#team">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Landing -->
+  <section id="landing" class="min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="container text-start">
+      <div class="row">
+        <div class="text col-lg-7 mt-3">
+          <h1 class="fx-semibold">Caring for Your Spine with Technology</h1>
+          <br />
+          <p>
+            Use our easy-to-follow guide and upload your X-ray to receive fast, accurate results for scoliosis detection.
+          </p>
+          <br />
+          <a href="#model">
+            <button class="landing-btn start-btn mb-5 mx-3">
+              Get Started
+            </button>
+          </a>
+          <a href="#examination">
+            <button class="landing-btn discover-btn mb-5 mx-3">
+              Discover More
+            </button>
+          </a>
+        </div>
+        <div class="image col-lg-5">
+          <img src="./images/landing.png" alt="ARC Logo" width="600" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Credits -->
+  <section id="credits">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="section-title">
+            <h1 class="display-3">Data supported by</h1>
+          </div>
+        </div>
+      </div>
+      <!-- Centering Wrapper for All Rows -->
+      <div class="d-flex flex-column align-items-center">
+        <!-- Row 1 -->
+        <div class="row row1 mx-auto wrapper text-center justify-content-center">
+          <div class="col-lg-3 col-sm-3 px-5">
+            <img src="./images/arc.png" alt="" width="100" />
+          </div>
+          <div class="col-lg-3 col-sm-3 px-5">
+            <img src="./images/scolio-care.png" alt="" width="180" />
+          </div>
+          <div class="col-lg-3 col-sm-3 px-5 mt-2">
+            <img src="./images/tayser.png" alt="" width="130" />
+          </div>
+          <div class="col-lg-3 col-sm-3 px-5 mt-4">
+            <img src="./images/4kids.png" alt="" width="200" />
+          </div>
+        </div>
+        <!-- Row 2 -->
+        <div class="row row2 wrapper mt-5 text-center justify-content-center">
+          <div class="col-lg-4 col-sm-3 px-5">
+            <img src="./images/medeley.png" alt="" width="150" />
+          </div>
+          <div class="col-lg-4 col-sm-3 px-5 mt-3">
+            <img src="../images/kaggle.png" alt="" width="180" />
+          </div>
+          <div class="col-lg-4 col-sm-3 px-5">
+            <img src="./images/data.png" alt="" width="80" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Self-Examination -->
+  <section id="examination" class="section-padding">
+    <div class="container">
+      <div class="row">
+        <h1 class="display-3">Check Yourself</h1>
+        <p class="question">
+          Simple Steps to Spot Scoliosis
+        </p>
+        <ul class="accordion outer-list justify-content-center">
+          <li>
+            <input type="checkbox" name="accordion" id="first" checked>
+            <label for="first">Stand Tall in Front of a Mirror</label>
+            <div class="content">
+              <div class="text">
+                <p>Remove bulky clothing to clearly see your spine and posture.</p>
+                <p>Look for signs like:
+                <ul class="inner-list">
+                  <li>Uneven shoulders.</li>
+                  <li>Uneven hips.</li>
+                  <li>A tilted head.</li>
+                </ul>
+                </p>
+              </div>
+              <img src="./images/step11.png" alt="" width="170" class="step1 mx-5">
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" name="accordion" id="second">
+            <label for="second">Check Shoulder Levels</label>
+            <div class="content">
+              <div class="text">
+                <p>Observe whether one shoulder is noticeably higher than the other.</p>
+              </div>
+              <img src="" alt="">
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" name="accordion" id="third">
+            <label for="third">Observe Your Rib Cage, Waist, and Hips</label>
+            <div class="content">
+              <div class="text">
+                <p>Bend forward slightly and check for:
+                <ul class="inner-list">
+                  <li>One side of the rib cage being higher.</li>
+                  <li>Uneven waistlines.</li>
+                  <li>A higher appearance of one hip.</li>
+                </ul>
+                </p>
+              </div>
+              <img src="./images/step33.png" alt="" width="150" class="step3 mx-5">
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" name="accordion" id="fourth">
+            <label for="fourth">Perform the Forward Bend Test</label>
+            <div class="content">
+              <div class="text">
+                <p>Bend forward at the waist, letting your arms hang naturally.</p>
+                <p>Look for:
+                <ul class="inner-list">
+                  <li>One side of the back appearing higher.</li>
+                  <li>Uneven alignment.</li>
+                </ul>
+                <br>
+                <span class="fst-italic"> Tip: Ask someone to observe or take a photo of your back.</span></p>
+              </div>
+              <img src="./images/step4.png" alt="" width="250" class="mx-5 step4">
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" name="accordion" id="fifth">
+            <label for="fifth">Note Pain or Discomfort</label>
+            <div class="content">
+              <div class="text">
+                <p>Is there persistent back pain or stiffness?</p>
+                <p>Monitor whether pain limits your movements or daily activities.</p>
+              </div>
+              <img src="./images/step5.png" alt="" width="100" class="mx-5 step5">
+            </div>
+          </li>
+        </ul>
+        <p class="advice text-center">"Notice any changes? Track them closely and consult a healthcare professional for a clear diagnosis. <br> These
+          steps are a guide and not a substitute for medical advice."</p>
+      </div>
+    </div>
+  </section>
+  <!-- Treatment -->
+  <section id="treatment" class="section-padding">
+    <div class="container">
+      <div class="col-12 text-center">
+        <div class="section-title  mb-4">
+          <h1 class="display-3  mb-2">
+            Your Path to Recovery
+          </h1>
+          <div class="line"></div>
+          <h2 class=" mt-3 mb-4">
+            Scoliosis Treatment Options
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+        </div>
+        <div class="text-box mt-5 col-lg-8">
+          <h1 class="display-3 ">Observation</h1>
+          <div class="content">
+            <ul>
+              <li>Suitable for mild cases with a small curve.</li>
+              <li>Regular doctor visits and X-rays to monitor the spine.</li>
+            </ul>
+            <img src="./images/observation.png" alt="" width="150" class="mx-5 mb-3">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="text-box mt-5 col-lg-8">
+          <h1 class="display-3">Bracing</h1>
+          <div class="content">
+            <ul>
+              <li>Used for moderate curves in growing children or teens.</li>
+              <li>A custom-fitted brace helps stop the curve from worsening.</li>
+            </ul>
+            <img src="./images/braces.png" alt="" width="150" class="mx-3 mb-3">
+          </div>
+        </div>
+        <div class="col-lg-4">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+        </div>
+        <div class="text-box mt-5 col-lg-8">
+          <h1 class="display-3">Physical Therapy</h1>
+          <div class="content">
+            <ul>
+              <li>Exercises to strengthen the back and improve posture.</li>
+              <li>Focus on flexibility and core stability.</li>
+            </ul>
+            <img src="./images/therapy.png" alt="" width="200" class="mx-3 mb-3">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="text-box mt-5 col-lg-9">
+          <h1 class="display-3">Medication for Pain Relief</h1>
+          <div class="content">
+            <ul>
+              <li>For mild discomfort, over-the-counter painkillers may help.</li>
+              <li>Consult a doctor for long-term pain management.</li>
+            </ul>
+            <img src="./images/mediaction.png" alt="" width="200" class="mx-5 mb-3">
+          </div>
+        </div>
+        <div class="col-lg-3">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4">
+        </div>
+        <div class="text-box mt-5 col-lg-8">
+          <h1 class="display-3">Surgery (Severe Cases)</h1>
+          <div class="content">    
+            <ul>
+              <li>Needed if the curve is very large or causing serious problems.</li>
+              <li>Common procedure: Spinal fusion to straighten and stabilize the spine.</li>
+            </ul>
+            <img src="./images/surgery.png" alt="" width="170" class="mx-4 mb-3">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Model -->
+  <section id="model">
+    <div class="container">
+        <div class="row upload-section">
+          <h1 class="display-3 section-heading mt-2">Get Your Results:</h1>
+          <p>Get Insights From Your X-Ray Instantly</p>          
+            <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+              <label for="xray-upload" class="upload-label">Select X-ray File</label>
+              <input type="file" id="xray-upload" name="xray" accept=".jpg,.png,.pdf" required class="file-input">
+              <small class="file-guidelines">Supported formats: JPG, PNG, PDF | Max size: 5MB</small>
+              <div class="preview" id="preview-container">
+                <img id="preview-image" src="#" alt="Image preview" style="display: none;">
+              </div>
+              <button type="submit" class="btn-submit mx-3">Upload & Analyze</button>
+            </form>
+        </div>
+    </div>
+  </section>
+  <!-- Research -->
+  <section id="research">
+    <div class="container">
+      <div class="row">
+        <div class="research-content">
+          <div class="research-paragraph">
+            <h1 class="display-3 mb-5">
+              Behind the Science: Our Research
+            </h1>
+            <p>
+              Our research focuses on utilizing advanced algorithms to detect scoliosis from X-ray images. This paper outlines the methodology behind our AI model, the data collected, and how it contributes to early diagnosis and more accurate treatment planning. Through this research, we aim to provide a reliable and accessible tool for individuals and healthcare professionals in the detection of scoliosis.
+            </p>
+          </div>
+          <div class="pdf-container mt-5 mb-5">
+            <iframe src="./images/ChasingArcs_ProjectProposal.pdf" width="100%" height="500px" frameborder="0">
+              This browser does not support embedded PDFs. Please <a href="path/to/your/research-paper.pdf" target="_blank">download the paper</a> to view.
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Team -->
+  <section id="team">
+    <div class="container">
+      <div class="col-12 text-center">
+        <div class="section-title pt-4 pb-5">
+          <h1 class="display-3 ">
+            "Behind the Innovation: ARC Team"
+          </h1>
+        </div>
+      </div>
+      <div class="cards-icons">
+        <div class="card">
+          <div class="content">
+            <div class="img-box"><img src="./images/khalaf.png" alt="" width="150"></div>
+            <div class="content-box">
+              <h2>Abdelrahman Khalaf</h2>
+            </div>
+            <ul class="sci">
+              <li style="--i:1">
+                <a href="https://github.com/Khalaf649"><i class="fa-brands fa-github"></i></a>
+              </li>
+              <li style="--i:2">
+                <a href="https://www.linkedin.com/in/abdlrhman-khalaf-243a782b7/"><i class="fa-brands fa-linkedin"></i></a>
+              </li>
+              <li style="--i:3">
+                <a href="mailto:abdlrhman.mohamed02@eng-st.cu.edu.eg"><i class="fa-solid fa-envelope"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <div class="img-box"><img src="./images/ekram.png" alt="" width="150"></div>
+            <div class="content-box">
+              <h2>Ekram Ahmed</h2>
+            </div>
+            <ul class="sci">
+              <li style="--i:1">
+                <a href="https://github.com/Ekram17ahmed"><i class="fa-brands fa-github"></i></a>
+              </li>
+              <li style="--i:2">
+                <a href="https://www.linkedin.com/in/ekram-auf-b97a93322/"><i class="fa-brands fa-linkedin"></i></a>
+              </li>
+              <li style="--i:3">
+                <a href="mailto:ekram.hafez03@eng-st.cu.edu.eg"><i class="fa-solid fa-envelope"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>        
+        <div class="card">
+          <div class="content">
+            <div class="img-box"><img src="./images/raghad.png" alt="" width="150"></div>
+            <div class="content-box">
+              <h2>Raghad Abdelhameed</h2>
+            </div>
+            <ul class="sci">
+              <li style="--i:1">
+                <a href="https://github.com/RaghadAbdelhameed"><i class="fa-brands fa-github"></i></a>
+              </li>
+              <li style="--i:2">
+                <a href="https://www.linkedin.com/in/raghadabdelhameed/"><i class="fa-brands fa-linkedin"></i></a>
+              </li>
+              <li style="--i:3">
+                <a href="mailto:raghad.abdelhameed04@eng-st.cu.edu.eg"><i class="fa-solid fa-envelope"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <div class="img-box"><img src="./images/salma.png" alt="" width="150"></div>
+            <div class="content-box">
+              <h2>Salma Ali</h2>
+            </div>
+            <ul class="sci">
+              <li style="--i:1">
+                <a href="https://github.com/Salmaa-Ali"><i class="fa-brands fa-github"></i></a>
+              </li>
+              <li style="--i:2">
+                <a href="https://www.linkedin.com/in/salma-alii/"><i class="fa-brands fa-linkedin"></i></a>
+              </li>
+              <li style="--i:3">
+                <a href="mailto:salma.ali04@eng-st.cu.edu.eg"><i class="fa-solid fa-envelope"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="content">
+            <div class="img-box"><img src="./images/zeyad.png" alt="" width="150"></div>
+            <div class="content-box">
+              <h2>Zeyad Ashraf</h2>
+            </div>
+            <ul class="sci">
+              <li style="--i:1">
+                <a href="https://github.com/ZEY0D"><i class="fa-brands fa-github"></i></a>
+              </li>
+              <li style="--i:2">
+                <a href=""><i class="fa-brands fa-linkedin"></i></a>
+              </li>
+              <li style="--i:3">
+                <a href="mailto:zeyad.mohamed04@eng-st.cu.edu.eg"><i class="fa-solid fa-envelope"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script src="./js/bootstrap.bundle.min.js"></script>
+  <script src="./js/all.min.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
+</html>
