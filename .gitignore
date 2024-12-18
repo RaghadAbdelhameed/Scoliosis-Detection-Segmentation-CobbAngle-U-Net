@@ -2,3 +2,5 @@ Spare
 Train
 test
 Spine X-Rays
+spinal_cord_unet.h5
+spine_rec_model_with_dropout_earlystop.h5
