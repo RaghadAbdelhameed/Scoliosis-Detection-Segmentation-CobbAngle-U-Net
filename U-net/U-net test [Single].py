@@ -4,12 +4,13 @@ import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import matplotlib.pyplot as plt
+import random
 
 # Placeholder for paths
-model_path = "./spinal_cord_unet.h5"  # Path to the saved model
-image_path = "./Processed_Scol(test)/69.jpg"  # Path to the single test image
-label_path = "./Processed_Scol(test)Line/69.jpg"  # Path to the corresponding label image
-output_dir = "./predictions"  # Directory to save the predicted mask
+model_path = "D:/Reseach day/ARC/U-net/spinal_cord_unet.h5"  # Path to the saved model
+image_dir = "D:/Reseach day/ARC/Processed_Scol(test)"  # Directory containing test images
+label_dir = "D:/Reseach day/ARC/Processed_Scol(test)Line"  # Directory containing label images
+output_dir = "D:/Reseach day/ARC/predictions"  # Directory to save the predicted masks
 
 # Load the trained model
 model = load_model(model_path)
@@ -56,7 +57,7 @@ def predict_and_save_single_image(image_path, label_path=None, output_dir="predi
     predicted_mask_binary = (predicted_mask > 0.5).astype(np.float32)  # Thresholding the mask
     
     # Save the predicted mask
-    save_path = os.path.join(output_dir, "predicted_mask.png")
+    save_path = os.path.join(output_dir, os.path.basename(image_path).replace(".jpg", "_predicted_mask.png"))
     plt.imsave(save_path, predicted_mask_binary.squeeze(), cmap='gray')
     print(f"Predicted mask saved to: {save_path}")
     
@@ -78,12 +79,22 @@ def predict_and_save_single_image(image_path, label_path=None, output_dir="predi
     
     # Plot the predicted mask
     plt.subplot(1, 3, 3)
-    plt.imshow(predicted_mask_binary.squeeze(), cmap='jet')
+    plt.imshow(predicted_mask_binary.squeeze(), cmap='gray')
     plt.title("Predicted Mask")
     plt.axis('off')
     
     plt.tight_layout()
     plt.show()
 
-# Run the function for a single image
-predict_and_save_single_image(image_path, label_path, output_dir)
+# Get all image paths from the directory
+image_paths = [os.path.join(image_dir, f) for f in os.listdir(image_dir) if f.endswith(".jpg")]
+label_paths = [os.path.join(label_dir, f) for f in os.listdir(label_dir) if f.endswith(".jpg")]
+
+# Randomly select 10 images and corresponding labels
+random_indices = random.sample(range(len(image_paths)), 10)
+selected_image_paths = [image_paths[i] for i in random_indices]
+selected_label_paths = [label_paths[i] for i in random_indices]
+
+# Run the function for each of the selected images
+for image_path, label_path in zip(selected_image_paths, selected_label_paths):
+    predict_and_save_single_image(image_path, label_path, output_dir)

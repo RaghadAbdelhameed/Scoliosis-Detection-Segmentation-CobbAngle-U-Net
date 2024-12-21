@@ -7,11 +7,11 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
 # Placeholder for model path
-model_path = "./spinal_cord_unet.h5"  # Replace with the path to your saved model
+model_path = "D:/Reseach day/ARC/U-net/spinal_cord_unet.h5"  # Replace with the path to your saved model
 
 # Placeholder for image and label directories
-image_dir = "./Processed_Scol(test)"  # Replace with your test image directory
-label_dir = "./Processed_Scol(test)Line"  # Replace with your test label directory
+image_dir = "D:/Reseach day/ARC/Processed_Scol(test)"  # Replace with your test image directory
+label_dir = "D:/Reseach day/ARC/Processed_Scol(test)Line"  # Replace with your test label directory
 
 # Load the trained model
 model = load_model(model_path)
