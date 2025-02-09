@@ -182,4 +182,4 @@ def draw_smooth_centerline(image_path):
     plt.show()
 
 # Example usage
-draw_smooth_centerline('./predictions/111_predicted_mask.png')  # Replace with your image path
+draw_smooth_centerline('./predictions/predicted_mask.png')  # Replace with your image path

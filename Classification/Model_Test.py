@@ -1,87 +1,94 @@
 import tensorflow as tf
-from tensorflow.keras.models import load_model
-import matplotlib.pyplot as plt
 import numpy as np
 import os
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from tensorflow.keras.preprocessing.image import load_img
+from sklearn.metrics import classification_report, confusion_matrix
+import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Load the saved model
-model = load_model('spine_rec_model_with_dropout_earlystop.h5')
+# Set parameters to match training
+IMG_HEIGHT = 25  # Matches training image height
+IMG_WIDTH = 50   # Matches training image width
+MODEL_PATH = 'spine_rec_model_optimized.h5'
 
-# Load the test dataset
-img_width = 25
-img_height = 50
-batch_size = 50
+def load_and_preprocess_image(file_path):
+    """Replicates the exact preprocessing used in training"""
+    img = load_img(
+        file_path,
+        color_mode='grayscale',
+        target_size=(IMG_HEIGHT, IMG_WIDTH)
+    )
+    img_array = tf.keras.preprocessing.image.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0)  # Add batch dimension
+    return img_array
 
-test_dataset = tf.keras.preprocessing.image_dataset_from_directory(
-    './test',
-    labels='inferred',
-    label_mode="int",
-    class_names=['Normal', 'Scol'],
-    color_mode='grayscale',
-    batch_size=batch_size,
-    image_size=(img_width, img_height),
-    shuffle=False
-)
+def main(test_dir):
+    # Load trained model
+    model = tf.keras.models.load_model(MODEL_PATH)
+    
+    # Data collection
+    filenames = []
+    true_labels = []
+    pred_probs = []
+    
+    # Process images
+    for root, dirs, files in os.walk(test_dir):
+        for file in files:
+            if file.lower().endswith(('.png', '.jpg', '.jpeg')):
+                file_path = os.path.join(root, file)
+                
+                # Get true label from directory structure
+                class_name = os.path.basename(root).lower()
+                true_label = 1 if class_name == 'scol' else 0
+                
+                try:
+                    # Identical preprocessing to training
+                    img_array = load_and_preprocess_image(file_path)
+                    
+                    # Prediction
+                    pred_prob = model.predict(img_array, verbose=0)[0][0]
+                    
+                    # Store results
+                    filenames.append(file_path)
+                    true_labels.append(true_label)
+                    pred_probs.append(pred_prob)
+                except Exception as e:
+                    print(f"Error processing {file_path}: {str(e)}")
+    
+    # Convert probabilities to class labels
+    pred_labels = [1 if prob >= 0.5 else 0 for prob in pred_probs]
+    
+    # Generate statistics
+    print("\nClassification Report:")
+    print(classification_report(true_labels, pred_labels, 
+                               target_names=['Normal', 'Scol']))
+    
+    print("\nConfusion Matrix:")
+    cm = confusion_matrix(true_labels, pred_labels)
+    print(cm)
+    
+    # Visualize confusion matrix
+    plt.figure(figsize=(6, 6))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                xticklabels=['Normal', 'Scol'],
+                yticklabels=['Normal', 'Scol'])
+    plt.xlabel('Predicted')
+    plt.ylabel('Actual')
+    plt.title('Confusion Matrix')
+    plt.show()
+    
+    # Additional metrics
+    accuracy = np.mean(np.array(true_labels) == np.array(pred_labels))
+    print(f"\nOverall Accuracy: {accuracy:.4f}")
+    
+    # Misclassified samples
+    misclassified = [filenames[i] for i in range(len(filenames)) 
+                    if true_labels[i] != pred_labels[i]]
+    print(f"\nNumber of misclassified samples: {len(misclassified)}")
+    print("First 10 misclassified samples:" if misclassified else "No misclassified samples")
+    for path in misclassified[:10]:
+        print(f" - {path}")
 
-# Evaluate the model on the test dataset
-test_loss, test_accuracy = model.evaluate(test_dataset, verbose=2)
-
-# Extract true labels and images
-true_labels = np.concatenate([y.numpy() for x, y in test_dataset], axis=0)
-images = np.concatenate([x.numpy() for x, y in test_dataset], axis=0)
-
-# Make predictions
-predictions = model.predict(test_dataset)
-predicted_labels = np.argmax(predictions, axis=1)  # Convert logits to class indices
-
-# Count correct and incorrect predictions
-correct_predictions = np.sum(predicted_labels == true_labels)
-incorrect_predictions = np.sum(predicted_labels != true_labels)
-
-# Accuracy
-total_images = len(true_labels)
-accuracy = correct_predictions / total_images * 100
-
-# Iterate through each image to display details
-print("\nDetailed Results:")
-for i in range(len(true_labels)):
-    truth = "Normal" if true_labels[i] == 0 else "Scol"
-    predicted = "Normal" if predicted_labels[i] == 0 else "Scol"
-    result = "Correct" if true_labels[i] == predicted_labels[i] else "Incorrect"
-    print(f"Image {i + 1}: Truth = {truth}, Predicted = {predicted}, Result = {result}")
-
-# Summary statistics
-print("\nSummary Statistics:")
-print(f"Total Images: {total_images}")
-print(f"Correct Predictions: {correct_predictions}")
-print(f"Incorrect Predictions: {incorrect_predictions}")
-print(f"Test Accuracy: {test_accuracy * 100:.2f}%")
-print(f"Test Loss: {test_loss:.4f}")
-
-# Plot the results
-categories = ['Correct Predictions', 'Incorrect Predictions']
-counts = [correct_predictions, incorrect_predictions]
-
-plt.bar(categories, counts, color=['green', 'red'])
-plt.ylabel('Number of Images')
-plt.title('Prediction Results')
-
-# Add values on top of bars
-for i, count in enumerate(counts):
-    plt.text(i, count + 1, str(count), ha='center', fontsize=12)
-
-plt.show()
-
-# Confusion Matrix
-cm = confusion_matrix(true_labels, predicted_labels)
-labels = ['Normal', 'Scol']
-
-# Visualize Confusion Matrix
-plt.figure(figsize=(8, 6))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=labels, yticklabels=labels)
-plt.xlabel('Predicted Labels')
-plt.ylabel('True Labels')
-plt.title('Confusion Matrix')
-plt.show()
+if __name__ == "__main__":
+    test_directory = './Train'  # Update with your test directory path
+    main(test_directory)

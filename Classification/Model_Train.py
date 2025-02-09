@@ -10,43 +10,30 @@ import matplotlib.pyplot as plt
 random.seed(123)
 np.random.seed(123)
 tf.random.set_seed(123)
-
-# If running on GPU, set deterministic operations to avoid non-deterministic behavior
 os.environ['TF_DETERMINISTIC_OPS'] = '1'
 
 # Model parameters
 img_width = 25
-img_height = 50  # ideally want to have full image res, but computer not strong enough for that
+img_height = 50  
 batch_size = 50
 
-# Build the model
-model = models.Sequential()
-model.add(layers.Conv2D(50, (3, 3), activation='relu', input_shape=(25, 50, 1)))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(100, (3, 3), activation='relu'))
-model.add(layers.MaxPooling2D((2, 2)))
-model.add(layers.Conv2D(100, (3, 3), activation='relu'))
-
-# Add Dropout layer to reduce overfitting
-model.add(layers.Dropout(0.3))  # Dropout rate of 30%
-
-model.add(layers.Flatten())
-model.add(layers.Dense(100, activation='relu'))
-
-# Softmax activation for multi-class classification
-model.add(layers.Dense(2, activation='softmax'))  # Softmax for two classes
+# Data Augmentation
+data_augmentation = tf.keras.Sequential([
+    layers.RandomFlip("horizontal"),
+    layers.RandomRotation(0.2),
+    layers.RandomZoom(0.2),
+])
 
 # Load the training dataset
 ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     './Train',
     labels='inferred',
-    label_mode="int",  # categorical, binary
-    class_names=['Normal', 'Scol'],
+    label_mode="binary",  # ✔ Ensures correct label format for binary classification
     color_mode='grayscale',
     batch_size=batch_size,
-    image_size=(img_width, img_height),  # reshape if not in this size
+    image_size=(img_width, img_height),  
     shuffle=True,
-    seed=123,  # makes split same every time
+    seed=123,
     validation_split=0.1,
     subset='training')
 
@@ -54,33 +41,49 @@ ds_train = tf.keras.preprocessing.image_dataset_from_directory(
 ds_validation = tf.keras.preprocessing.image_dataset_from_directory(
     './Train',
     labels='inferred',
-    label_mode="int",  # categorical, binary
-    class_names=['Normal', 'Scol'],
+    label_mode="binary",  # ✔ Binary labels
     color_mode='grayscale',
     batch_size=batch_size,
-    image_size=(img_width, img_height),  # reshape if not in this size
+    image_size=(img_width, img_height),
     shuffle=True,
-    seed=123,  # ensures the same validation split every time
+    seed=123,
     validation_split=0.1,
     subset='validation')
 
+# Apply Data Augmentation
+ds_train = ds_train.map(lambda x, y: (data_augmentation(x, training=True), y))
+
+# Build the improved CNN model
+model = models.Sequential([
+    layers.Conv2D(64, (3, 3), activation='relu', input_shape=(img_width, img_height, 1)),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(128, (3, 3), activation='relu'),
+    layers.MaxPooling2D((2, 2)),
+    layers.Conv2D(256, (3, 3), activation='relu'),
+    layers.Dropout(0.3),  # Dropout to reduce overfitting
+
+    layers.Flatten(),
+    layers.Dense(256, activation='relu'),
+    layers.Dense(1, activation='sigmoid')  # ✔ Correct output layer for binary classification
+])
+
 # Compile the model
 model.compile(optimizer='adam',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False),  # no logits needed with softmax
+              loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),  # ✔ Correct loss function
               metrics=['accuracy'])
 
-# EarlyStopping callback to stop training when validation loss doesn't improve
+# EarlyStopping callback
 early_stopping = EarlyStopping(monitor='val_loss', patience=3, restore_best_weights=True)
 
-# Train the model with early stopping
+# Train the model
 history = model.fit(ds_train, 
                     epochs=20, 
                     verbose=2, 
                     validation_data=ds_validation, 
-                    callbacks=[early_stopping])  # Apply early stopping
+                    callbacks=[early_stopping])
 
-# Save the model in .h5 format
-model.save('spine_rec_model_with_dropout_earlystop.h5')
+# Save the trained model
+model.save('spine_rec_model_optimized.h5')
 
 # Plot Accuracy and Loss Graphs
 accuracy = history.history['accuracy']
@@ -88,8 +91,9 @@ val_accuracy = history.history['val_accuracy']
 loss = history.history['loss']
 val_loss = history.history['val_loss']
 
-# Plot accuracy
 plt.figure(figsize=(12, 5))
+
+# Plot accuracy
 plt.subplot(1, 2, 1)
 plt.plot(accuracy, label='Training Accuracy')
 plt.plot(val_accuracy, label='Validation Accuracy')
